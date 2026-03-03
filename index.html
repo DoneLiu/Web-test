@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 背景动画 -->
-    <div class="bg-animation">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- Canvas 星空背景 -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- 鼠标光晕 -->
+    <div class="cursor-glow" id="cursorGlow"></div>
     <!-- 顶部导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
@@ -36,25 +36,25 @@
                     <div class="avatar">
                         <img src="https://upload.jianshu.io/users/upload_avatars/1467867/6d0523308470?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240" alt="头像" />
                     </div>
-                    <h1 class="name">刘是丑</h1>
-                    <p class="title">移动端开发工程师</p>
+                    <h1 class="name" id="typingName"></h1>
+                    <p class="title" id="typingTitle"></p>
                     <p class="bio">热爱编程，追求极致的用户体验。用代码创造价值，用技术改变生活。</p>
 
                     <div class="stats">
                         <div class="stat-item">
-                            <span class="number">8</span>
+                            <span class="number" data-target="8">0</span>
                             <span class="label">关注</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">48</span>
+                            <span class="number" data-target="48">0</span>
                             <span class="label">粉丝</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">13</span>
+                            <span class="number" data-target="13">0</span>
                             <span class="label">文章</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">12662</span>
+                            <span class="number" data-target="12662">0</span>
                             <span class="label">字数</span>
                         </div>
                     </div>
@@ -62,9 +62,17 @@
 
                 <!-- 文章列表 -->
                 <div class="articles-section">
-                    <h2 class="section-title">最新文章</h2>
+                    <div class="section-header">
+                        <h2 class="section-title">最新文章</h2>
+                        <div class="filter-tags">
+                            <button class="filter-tag active" data-filter="all">全部</button>
+                            <button class="filter-tag" data-filter="ios">iOS</button>
+                            <button class="filter-tag" data-filter="react">React</button>
+                            <button class="filter-tag" data-filter="tools">工具</button>
+                        </div>
+                    </div>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="ios">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/5d945f9397ad" target="_blank">店铺结构梳理</a>
                         </h3>
@@ -79,7 +87,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="ios">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/b03b49228c8b" target="_blank">Objective-C编程规范</a>
                         </h3>
@@ -94,7 +102,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="ios">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/84432e144597" target="_blank">iOS面试的常见问题清单</a>
                         </h3>
@@ -109,7 +117,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="tools">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/0e31a7485d8e" target="_blank">Mac下使用iTerm显示分支颜色</a>
                         </h3>
@@ -124,12 +132,12 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="react">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/bfe3e59d2c43" target="_blank">React-Native中的Flexbox布局简述</a>
                         </h3>
                         <p class="article-abstract">
-                            本文只是简单地介绍下在React-Native中，使用CSS的Flex布局方式，完成RN中的控件布局，掌握这个布局方式对于后续开发有非常大的用途...
+                            本文只是简单地介绍下在React-Native中，使用CSS的Flex布局方式，完成RN中的控件布局,掌握这个布局方式对于后续开发有非常大的用途...
                         </p>
                         <div class="article-meta">
                             <span class="date">2016-10-26</span>
@@ -139,7 +147,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="ios">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/22750570e393" target="_blank">iOS崩溃日志分析</a>
                         </h3>
@@ -154,7 +162,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="ios">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/4ebc64bdeae5" target="_blank">使用@encode关键字判断NSNumber对象存储的数据类型</a>
                         </h3>
@@ -169,7 +177,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="ios">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/f5a30ca2a46e" target="_blank">AFNetwork 3.x 在开发中常用基础的介绍</a>
                         </h3>
@@ -184,7 +192,7 @@
                         </div>
                     </article>
 
-                    <article class="article-item">
+                    <article class="article-item" data-category="tools">
                         <h3 class="article-title">
                             <a href="https://www.jianshu.com/p/fba354991867" target="_blank">Xcode 推荐插件</a>
                         </h3>
@@ -260,8 +268,261 @@
         <p class="footer-tech">Powered by Future Tech</p>
     </footer>
 
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
     <script>
-        // 平滑滚动
+        // ========== 1. Canvas 星空背景 ==========
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = [];
+        const shootingStars = [];
+        const starCount = 200;
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random();
+                this.opacityChange = (Math.random() - 0.5) * 0.02;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.opacity += this.opacityChange;
+
+                if (this.opacity <= 0 || this.opacity >= 1) {
+                    this.opacityChange = -this.opacityChange;
+                }
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class ShootingStar {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = 0;
+                this.length = Math.random() * 80 + 40;
+                this.speed = Math.random() * 10 + 6;
+                this.opacity = 1;
+                this.angle = Math.PI / 4;
+            }
+
+            update() {
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                this.opacity -= 0.01;
+
+                if (this.opacity <= 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.strokeStyle = `rgba(0, 212, 255, ${this.opacity})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(
+                    this.x - Math.cos(this.angle) * this.length,
+                    this.y - Math.sin(this.angle) * this.length
+                );
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < starCount; i++) {
+            stars.push(new Star());
+        }
+
+        for (let i = 0; i < 3; i++) {
+            shootingStars.push(new ShootingStar());
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+
+            shootingStars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+
+        animateStars();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // ========== 2. 鼠标光晕效果 ==========
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateGlow() {
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+
+            cursorGlow.style.left = glowX + 'px';
+            cursorGlow.style.top = glowY + 'px';
+
+            requestAnimationFrame(animateGlow);
+        }
+
+        animateGlow();
+
+        // ========== 3. 打字机效果 ==========
+        const typingName = document.getElementById('typingName');
+        const typingTitle = document.getElementById('typingTitle');
+        const nameText = '刘是丑';
+        const titleText = '移动端开发工程师';
+        let nameIndex = 0;
+        let titleIndex = 0;
+
+        function typeName() {
+            if (nameIndex < nameText.length) {
+                typingName.textContent += nameText.charAt(nameIndex);
+                nameIndex++;
+                setTimeout(typeName, 200);
+            } else {
+                setTimeout(typeTitle, 500);
+            }
+        }
+
+        function typeTitle() {
+            if (titleIndex < titleText.length) {
+                typingTitle.textContent += titleText.charAt(titleIndex);
+                titleIndex++;
+                setTimeout(typeTitle, 100);
+            }
+        }
+
+        typeName();
+
+        // ========== 4. 数字滚动动画 ==========
+        const statNumbers = document.querySelectorAll('.stat-item .number');
+        let animated = false;
+
+        function animateNumbers() {
+            statNumbers.forEach(number => {
+                const target = parseInt(number.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        number.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        number.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
+
+        // ========== 5. 阅读进度条 ==========
+        const readingProgress = document.getElementById('readingProgress');
+
+        function updateReadingProgress() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            readingProgress.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+
+        // ========== 6. 回到顶部按钮 ==========
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ========== 7. 文章分类筛选 ==========
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const articles = document.querySelectorAll('.article-item');
+
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const filter = tag.getAttribute('data-filter');
+
+                filterTags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
+
+                articles.forEach(article => {
+                    if (filter === 'all' || article.getAttribute('data-category') === filter) {
+                        article.style.display = 'block';
+                        setTimeout(() => {
+                            article.style.opacity = '1';
+                            article.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        article.style.opacity = '0';
+                        article.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            article.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // ========== 8. 平滑滚动 ==========
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -272,8 +533,7 @@
             });
         });
 
-        // 文章卡片悬停效果
-        const articles = document.querySelectorAll('.article-item');
+        // ========== 9. 文章卡片悬停效果 ==========
         articles.forEach(article => {
             article.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateX(5px)';
@@ -283,7 +543,7 @@
             });
         });
 
-        // 滚动显示动画
+        // ========== 10. 滚动显示动画 ==========
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -294,6 +554,11 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+
+                    if (!animated && entry.target.classList.contains('stats')) {
+                        animated = true;
+                        animateNumbers();
+                    }
                 }
             });
         }, observerOptions);
@@ -304,6 +569,11 @@
             article.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(article);
         });
+
+        const stats = document.querySelector('.stats');
+        if (stats) {
+            observer.observe(stats);
+        }
     </script>
 </body>
 </html>
